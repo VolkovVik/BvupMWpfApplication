@@ -1,0 +1,145 @@
+﻿<!-- ReSharper disable Xaml.RedundantNamespaceAlias -->
+<Window
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:WpfApplication"
+    xmlns:properties="clr-namespace:WpfApplication.Properties"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    x:Class="WpfApplication.Views.MainWindow"
+    mc:Ignorable="d"
+    Title="MainWindow"
+    MinWidth="200 " MinHeight="150" Width="750" Height="600"
+    SizeChanged="MainWindow_OnSizeChanged"
+    WindowStartupLocation="CenterScreen" 
+    TextOptions.TextFormattingMode="Display"
+    FontFamily="./Font/#PT Mono" >
+    <!-- ReSharper restore Xaml.RedundantNamespaceAlias -->
+    <Window.Resources>
+        <!-- Ресурсы -->
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resource/DictionaryButton.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <!--Создание разметки-->
+    <Grid x:Name="MainGrid" Margin="5">
+        <!--Привязка события к команде-->
+        <Grid.DataContext>
+            <Binding Source="{x:Static local:App.MyWindows}" />
+        </Grid.DataContext>
+        <!-- Установка строк -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="22" />
+            <RowDefinition Height="130" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="25" />
+            <RowDefinition />
+            <RowDefinition Height="15" />
+        </Grid.RowDefinitions>
+        <!-- Установка столбцов -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="0.25*" />
+        </Grid.ColumnDefinitions>
+        <Menu x:Name="Menu" HorizontalAlignment="Stretch" MinHeight="20" Margin="0,0,0,0"
+              Grid.Row="0" VerticalAlignment="Top" Background="White">
+            <MenuItem x:Name="MenuItemFile" Header="Файл" HorizontalAlignment="Center" MinHeight="20" MinWidth="50">
+                <MenuItem Name="MenuItemId" Header="Идентификационные данные" Click="MenuItemId_Click" />
+                <Separator />
+                <MenuItem Name="MenuItemExit" Header="Выход" Click="MenuItemExit_Click" />
+            </MenuItem>
+            <MenuItem Name="MenuSettingItem" Header="Настройка" HorizontalAlignment="Center" MinHeight="20"
+                      MinWidth="50" Click="MenuSettingItem_Click" />
+            <MenuItem Name="MenuCheckConnectionItem" Header="Контроль связи с ВМ-7" HorizontalAlignment="Center"
+                      MinHeight="20"
+                      MinWidth="50" Click="MenuCheckConnectionItem_OnClick" />
+            <MenuItem Name="MenuItemInfo" Header="О программе" HorizontalAlignment="Stretch" MinHeight="20"
+                      MinWidth="50" Click="MenuItemInfo_Click" />
+        </Menu>
+        <TabControl x:Name="TabControlL1"
+                    HorizontalAlignment="Stretch" MinHeight="10" Margin="0,0,0,0"
+                    Grid.Row="1" Grid.RowSpan="4" Grid.Column="0" VerticalAlignment="Stretch"
+                    SelectedIndex="{Binding Path=Index1}"
+                    MinWidth="10" TabStripPlacement="Top" />
+        <TextBox x:Name="TextBox" AcceptsReturn="True"
+                 HorizontalAlignment="Stretch" MinHeight="23" Margin="0,1,0,0"
+                 Grid.RowSpan="3" Grid.Row="5"
+                 Grid.ColumnSpan="2" Grid.Column="0"
+                 TextWrapping="Wrap" Text="{Binding Path=Text}"
+                 VerticalAlignment="Stretch" MinWidth="120" VerticalScrollBarVisibility="Auto"
+                 Background="{Binding Path=Brush}" TextOptions.TextFormattingMode="Display"
+                 TextChanged="TextBox_TextChanged">
+            <TextBox.ContextMenu>
+                <ContextMenu />
+            </TextBox.ContextMenu>
+        </TextBox>
+        <ProgressBar x:Name="ProgressBar"
+                     HorizontalAlignment="Stretch" Height="15" Margin="0,0,0,0" Grid.Row="8"
+                     Grid.ColumnSpan="2" Grid.Column="0" VerticalAlignment="Top"
+                     Minimum="{Binding Path=MinProgress}" Maximum="{Binding Path=MaxProgress}"
+                     Value="{Binding Path=ValueProgress}" IsIndeterminate="{Binding Path=IndeterminateProgress}" />
+        <Button x:Name="ButtonStart" Content="Контроль блока" Tag="Старт полного теста"
+                Grid.Column="1" HorizontalAlignment="Stretch"
+                Margin="5,0,5,1"
+                Grid.Row="2" VerticalAlignment="Stretch"
+                Style="{StaticResource BaseButtonStyle}"
+                Command="{Binding StartTestCommand}" CommandParameter="button_start" />
+        <Button x:Name="ButtonStop" Content="Стоп" Tag="Стоп"
+                Grid.Column="1" HorizontalAlignment="Stretch"
+                Margin="5,0,5,1"
+                Grid.Row="3" VerticalAlignment="Stretch"
+                Style="{StaticResource BaseButtonStyle}"
+                Command="{Binding BreakTestCommand}" CommandParameter="button_break" />
+        <CheckBox x:Name="CheckBoxLog" Content="Показать лог-файл"
+                  Grid.Column="1" HorizontalAlignment="Stretch"
+                  Margin="10,3,5,1" IsEnabled="{Binding Path=IsEnableLog}" IsChecked="{Binding Path=IsCheckedLog}"
+                  Grid.Row="4" VerticalAlignment="Stretch">
+            <!-- Checked="CheckBoxLog_Checked" Unchecked="CheckBoxLog_Unchecked" -->
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Checked">
+                    <i:InvokeCommandAction
+                        Command="{Binding OpenLogFileCommand}"
+                        CommandParameter="open log file" />
+                </i:EventTrigger>
+                <i:EventTrigger EventName="Unchecked">
+                    <i:InvokeCommandAction
+                        Command="{Binding CloseLogFileCommand}"
+                        CommandParameter="close log fail" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </CheckBox>
+        <Image x:Name="Image1" Grid.Column="1" HorizontalAlignment="Center" Height="100"
+               Margin="0,10,0,10" Grid.Row="1" VerticalAlignment="Bottom" Width="100" MouseDown="Image1_MouseDown" />
+        <RichTextBox x:Name="RichTextBox" HorizontalAlignment="Stretch" Margin="0,0,0,0"
+                     VerticalAlignment="Stretch" FontFamily="Courier New"
+                     VerticalScrollBarVisibility="Auto"
+                     Grid.RowSpan="2" Grid.Row="5"
+                     Grid.ColumnSpan="2" Grid.Column="0" Visibility="Hidden">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text="" />
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <Button x:Name="ButtonFindError" Content="Поиск ошибки" Tag="Поиск ошибки"
+                Grid.Column="1" HorizontalAlignment="Stretch"
+                Margin="5,2,20,0"
+                Grid.Row="6" VerticalAlignment="Stretch"
+                Visibility="{Binding Path=VisibityFindErrorButton}"
+                Click="ButtonFindError_Click"
+                Style="{StaticResource BaseButtonStyle}" />
+        <TextBox x:Name="TextFindError" Text="отказ" Tag="Поиск ошибки"
+                 Grid.Column="1" HorizontalAlignment="Stretch"
+                 Margin="5,2,20,0"
+                 Grid.Row="5" VerticalAlignment="Stretch"
+                 Visibility="{Binding Path=VisibityFindErrorText}"
+                 KeyDown="TextFindError_OnKeyDown" BorderBrush="{x:Null}"
+                 TextAlignment="Center" Background="{x:Null}" />
+    </Grid>
+</Window>

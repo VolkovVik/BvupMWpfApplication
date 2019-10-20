@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<БВУП-М>
+  <RS232>
+    <PORT1 NAME="COM1" />
+    <PORT2 NAME="COM3" />
+  </RS232>
+  <PCI_CARD>
+    <PCI1716 INDEX="" />
+    <PCI1721 INDEX="PCI-1721,BID#15" />
+    <PCI1724U INDEX="PCI-1724,BID#0" />
+    <PCI1747U INDEX="PCI-1747U,BID#0" />
+    <PCI1753N1 INDEX="PCI-1753,BID#1" />
+    <PCI1753N2 INDEX="PCI-1753,BID#2" />
+    <PCI429N1 SN="13197" />
+    <PCI429N2 SN="17333" />
+  </PCI_CARD>
+  <HEX_FILES>
+    <!--<CPU_A NAME="1892VM8YA" CHECK_SUM="0x8E354EF2" PATH="vm7.mot" />-->
+    <CPU_A NAME="MPC5200" CHECK_SUM="0xC88D4ABC" PATH="vins2015.mot" />
+  </HEX_FILES>
+  <LOG_FILES>
+    <SAVE_FILES PATH="log_result" />
+    <CREATE_PDF_FILE ENABLE="YES" />
+    <SEND_EMAIL ADDRESS="volkov.vik1@gmail.com" />
+  </LOG_FILES>
+  <LOAD_IMAGE_ROM>
+    <VIEW_MENU ENABLE="NOT" />
+  </LOAD_IMAGE_ROM>
+  <DEBUG LOAD_HEX="YES" LOAD_CH1="YES" LOAD_CH2="NOT" />
+</БВУП-М>

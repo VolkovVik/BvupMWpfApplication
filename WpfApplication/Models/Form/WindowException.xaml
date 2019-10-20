@@ -1,0 +1,125 @@
+﻿<Window x:Class="WpfApplication.Models.Form.WindowException"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+
+        xmlns:main="clr-namespace:WpfApplication.Models.Main"
+        xmlns:form="clr-namespace:WpfApplication.Models.Form"
+        mc:Ignorable="d"
+        Title="Уведомление о критическом исключении" Height="200" MinWidth="600" Width="700" Name="WindowsOfError"
+        WindowStartupLocation="CenterScreen" Loaded="WindowsOfError_Loaded">
+    <Window.Resources>
+        <ResourceDictionary>
+            <form:DateFormatter x:Key="FormatConverter" />
+            <GradientStopCollection x:Key="MyGlassGradientStopsResource">
+                <GradientStop Color="Transparent" Offset="-.5" />
+                <GradientStop Color="#FFF08080" Offset="-.25" />
+                <GradientStop Color="Transparent" Offset=".0" />
+                <GradientStop Color="LightCoral" Offset=".25" />
+                <GradientStop Color="Transparent" Offset=".5" />
+                <GradientStop Color="LightCoral" Offset="0.75" />
+                <GradientStop Color="Transparent" Offset="1" />
+            </GradientStopCollection>
+            <LinearGradientBrush x:Key="MyGlassBrushResource"
+                                 StartPoint="0,0" EndPoint="1,1.5" Opacity=".75"
+                                 GradientStops="{StaticResource MyGlassGradientStopsResource}" />
+        </ResourceDictionary>
+    </Window.Resources>
+    <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto">
+        <Grid>
+            <!-- Установка строк -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+                <RowDefinition Height="5" />
+            </Grid.RowDefinitions>
+            <!-- Установка столбцов -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="10*" />
+                <ColumnDefinition Width="2*" MaxWidth="100" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="5" />
+            </Grid.ColumnDefinitions>
+            <Rectangle Grid.Column="0" Grid.ColumnSpan="6" HorizontalAlignment="Stretch" Margin="0,0,0,0"
+                       Grid.Row="0" Grid.RowSpan="9" VerticalAlignment="Stretch"
+                       StrokeThickness="2" RadiusX="2" RadiusY="2" Opacity="1"
+                       RenderTransformOrigin="0.5,0.5"
+                       Fill="{StaticResource MyGlassBrushResource}">
+                <Rectangle.Triggers>
+                    <EventTrigger RoutedEvent="Rectangle.Loaded">
+                        <EventTrigger.Actions>
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation
+                                        Storyboard.TargetProperty="(Fill).(GradientBrush.GradientStops)[0].(GradientStop.Offset)"
+                                        From="-.5" To="0" Duration="0:0:5"
+                                        FillBehavior="HoldEnd" AutoReverse="False" RepeatBehavior="Forever" />
+                                    <DoubleAnimation
+                                        Storyboard.TargetProperty="(Fill).(GradientBrush.GradientStops)[1].(GradientStop.Offset)"
+                                        From="-.25" To=".25" Duration="0:0:5"
+                                        FillBehavior="HoldEnd" AutoReverse="False" RepeatBehavior="Forever" />
+                                    <DoubleAnimation
+                                        Storyboard.TargetProperty="(Fill).(GradientBrush.GradientStops)[2].(GradientStop.Offset)"
+                                        From="0" To=".5" Duration="0:0:5"
+                                        FillBehavior="HoldEnd" AutoReverse="False" RepeatBehavior="Forever" />
+                                    <DoubleAnimation
+                                        Storyboard.TargetProperty="(Fill).(GradientBrush.GradientStops)[3].(GradientStop.Offset)"
+                                        From=".25" To=".75" Duration="0:0:5"
+                                        FillBehavior="HoldEnd" AutoReverse="False" RepeatBehavior="Forever" />
+                                    <DoubleAnimation
+                                        Storyboard.TargetProperty="(Fill).(GradientBrush.GradientStops)[4].(GradientStop.Offset)"
+                                        From=".5" To="1" Duration="0:0:5"
+                                        FillBehavior="HoldEnd" AutoReverse="False" RepeatBehavior="Forever" />
+                                    <DoubleAnimation
+                                        Storyboard.TargetProperty="(Fill).(GradientBrush.GradientStops)[5].(GradientStop.Offset)"
+                                        From=".75" To="1.25" Duration="0:0:5"
+                                        FillBehavior="HoldEnd" AutoReverse="False" RepeatBehavior="Forever" />
+                                    <DoubleAnimation
+                                        Storyboard.TargetProperty="(Fill).(GradientBrush.GradientStops)[6].(GradientStop.Offset)"
+                                        From="1" To="1.5" Duration="0:0:5"
+                                        FillBehavior="HoldEnd" AutoReverse="False" RepeatBehavior="Forever" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger.Actions>
+                    </EventTrigger>
+                </Rectangle.Triggers>
+            </Rectangle>
+            <Image x:Name="Image1" Grid.Column="3" HorizontalAlignment="Stretch" MinHeight="25" MaxHeight="150"
+                   Margin="0,0,0,0" Grid.Row="1" Grid.RowSpan="5" VerticalAlignment="Stretch" MinWidth="25"
+                   MaxWidth="150" />
+            <TextBlock Text="Тип:" Grid.Column="1" HorizontalAlignment="Left" Margin="2,2,2,0" Grid.Row="1"
+                       VerticalAlignment="Top" />
+            <TextBlock Text="Описание:" Grid.Column="1" HorizontalAlignment="Left" Margin="2,2,2,0" Grid.Row="2"
+                       VerticalAlignment="Top" />
+            <TextBlock Text="Source:" Grid.Column="1" HorizontalAlignment="Left" Margin="2,2,2,0" Grid.Row="3"
+                       VerticalAlignment="Top" />
+            <TextBlock Text="TargetSite:" Grid.Column="1" HorizontalAlignment="Left" Margin="2,2,2,0" Grid.Row="4"
+                       VerticalAlignment="Top" />
+            <TextBlock Text="Message:" Grid.Column="1" HorizontalAlignment="Left" Margin="2,2,2,0" Grid.Row="5"
+                       VerticalAlignment="Top" />
+            <TextBlock Text="StackTrace:" Grid.Column="1" HorizontalAlignment="Left" Margin="2,2,2,0" Grid.Row="6"
+                       VerticalAlignment="Top" />
+            <TextBlock x:Name="LabelType" Text="" Grid.Column="2" HorizontalAlignment="Left"
+                       Margin="0,2,0,2" Grid.Row="1" VerticalAlignment="Center" TextWrapping="Wrap" />
+            <TextBlock x:Name="LabelText" Text="" Grid.Column="2" HorizontalAlignment="Left"
+                       Margin="0,2,0,2" Grid.Row="2" VerticalAlignment="Center" TextWrapping="Wrap" />
+            <TextBlock x:Name="LabelSource" Text="" Grid.Column="2" HorizontalAlignment="Left"
+                       Margin="0,2,0,2" Grid.Row="3" VerticalAlignment="Center" TextWrapping="Wrap" />
+            <TextBlock x:Name="LabelTargetSite" Text="" Grid.Column="2" HorizontalAlignment="Left"
+                       Margin="0,2,0,2" Grid.Row="4" VerticalAlignment="Center" TextWrapping="Wrap" />
+            <TextBlock x:Name="LabelMessage" Text="" Grid.Column="2" HorizontalAlignment="Left"
+                       Margin="0,2,0,2" Grid.Row="5" VerticalAlignment="Center" TextWrapping="Wrap" />
+            <TextBlock x:Name="LabelStackTrace" Text="" Grid.Column="2" HorizontalAlignment="Left"
+                       Margin="0,2,0,2" Grid.Row="6" VerticalAlignment="Center" TextWrapping="Wrap" />
+        </Grid>
+    </ScrollViewer>
+</Window>
